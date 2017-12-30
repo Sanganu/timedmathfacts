@@ -1,0 +1,2 @@
+# timedmathfacts
+10secs
