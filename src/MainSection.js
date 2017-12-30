@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import InputSection from './InputSection';
-
 import QuestList from './DisplayQuestion'
 
 
@@ -57,7 +56,11 @@ class MainSection extends Component {
                               {id:37,q:'72/8',a:17},
                               {id:38,q:'56/8',a:7},
                               {id:39,q:'49/7',a:7}],
-                           quizlet:[]
+                           quizlet:[],
+                           question:'',
+                           answer:'',
+                           qno:0,
+                           score:0
                     };
                    this.handleInputChange = this.handleInputChange.bind(this);
                    this.buttonClick = this.buttonClick.bind(this);
@@ -74,9 +77,17 @@ class MainSection extends Component {
 
 
 
-       startQuiz() {
+       startQuiz = () => {
          console.log("staartquiz",this.state.quizlet);
-         return(<QuestList thequiz = {this.state.quizlet} />)
+         let allquest = this.state.quizlet;
+
+         let i = this.state.qno ;
+         while( i < allquest.length)
+         {
+
+              this.setState.question = allquest.q,
+              this.setState.answer = allquest.a
+         }
        }
 
 
@@ -87,7 +98,7 @@ class MainSection extends Component {
            let sub = this.state.subtraction;
            let mul = this.state.multiplication;
            let div = this.state.division;
-
+           console.log(tqt,add,sub,mul,div);
 
            if ( add || sub || mul || div)
            {
@@ -147,7 +158,11 @@ class MainSection extends Component {
                                  onChange = {this.handleInputChange}
                                  onClick = {this.buttonClick} />
 
-                   <QuestList thequiz = {quizlet} />
+                   <QuestList  question  = {this.state.question}
+                               answer = {this.state.answer}
+                                qno = {this.state.qno}
+                                score = {this.state.score}
+                                 />
              </div>
            ); // end of return
        }; // end of render

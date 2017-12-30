@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 class InputSection extends Component {
        constructor(props){
           super(props);
-          this.handleInputdesc = this.handleInputdesc.bind(this);
-          this.handleClickdesc = this.handleClickdesc.bind(this);
+          //this.handleInputdesc = this.handleInputdesc.bind(this);
+          //this.handleClickdesc = this.handleClickdesc.bind(this);
        }
 
       handleInputdesc = (event) => {
@@ -16,9 +16,7 @@ class InputSection extends Component {
         this.props.onChange(value,name);
       }
       handleClickdesc = (event) =>{
-          console.log('handle click',this.props.addition,this.props.multiplication);
            this.props.onClick(event.target.value);
-
       };
 
 
@@ -35,6 +33,9 @@ class InputSection extends Component {
                                  <label className ="checkbox-inline cloptions">
                                      <input type = "checkbox"  checked={this.props.multiplication} onChange = {this.handleInputdesc} name = "multiplication" />Multiplication
                                   </label>
+                                  <label className ="checkbox-inline cloptions">
+                                      <input type = "checkbox"  checked={this.props.division} onChange = {this.handleInputdesc} name = "division" />Multiplication
+                                   </label>
                                  <div className = "form-group">
                                       <label>Number of Questions</label>
                                        <select value={this.props.tquest} onChange = {this.handleInputdesc} className = "form-control" name = "tquest">
