@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 
 
 class InputSection extends Component {
-       constructor(props){
-          super(props);
-          //this.handleInputdesc = this.handleInputdesc.bind(this);
-          //this.handleClickdesc = this.handleClickdesc.bind(this);
-       }
+
 
       handleInputdesc = (event) => {
         const target = event.target;
@@ -43,7 +39,7 @@ class InputSection extends Component {
                                           <option value ='9'>9</option>
                                           <option value ='7'>7</option>
                                           <option value ='5'>5</option>
-                                      </select>
+                                       </select>
                                   </div>
                                    <br />
                             <button className = "btn btn-info"  name = "getquest" onClick = {this.handleClickdesc}>Start the Quiz</button>
