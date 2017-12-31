@@ -21,25 +21,26 @@ class MainSection extends Component {
        }
 
        handleInputChange =(value,name) => {
-         //console.log('The Value in   Ancestor',value,name);
+         console.log('The Value in   Ancestor',value,name);
 
             this.setState({
                [name]: value
              });
+         console.log(`The quizlet state array is ${this.state.quizlet}`);
        }
 
 
 
-       startQuiz = () => {
-         console.log("staartquiz",this.state.quizlet);
-         let allquest = this.state.quizlet;
-
+       startQuiz = (quizlet) => {
+         console.log("staartquiz",quizlet);
+         let allquest = quizlet;
          let i = this.state.qno ;
          while( i < allquest.length)
          {
-
-              this.setState.question = allquest.q,
-              this.setState.answer = allquest.a
+              console.log(`The i ${i},allquest[${i}]`)
+              this.setState.question = allquest[i].q,
+              this.setState.answer = allquest[i].a
+              i++;
          }
        }
 
@@ -50,63 +51,67 @@ class MainSection extends Component {
          let sub = this.state.subtraction;
          let mul = this.state.multiplication;
          let div = this.state.division;
-         console.log(tqt,add,sub,mul,div);
+         console.log('Insidegenerate',tqt,add,sub,mul,div);
          let num1 = Math.floor(Math.random()*(maxnum));
-         let num2 = Math.floor(Math.random()*(maxnum-1));
-         let questionsarray = [];
+         let num2 = Math.floor(Math.random()*(maxnum));
+         let  questionarray = [];
 
          if ( add || sub || mul || div)
          {
              while(maxnum < tqt)
              {
-               let num1 = Math.floor(Math.random()*(maxnum));
-               let num2 = Math.floor(Math.random()*(maxnum-1));
+               let num1 = Math.floor(Math.random()*(maxnum-1)+1);
+               let num2 = Math.floor(Math.random()*(maxnum-1)+1);
                if( add && maxnum<tqt)
                {
-                  let quizlet = {
+                    questionarray.push({
                     q:`${num1}+${num2}`,
                     a:num1+num2
-                  }
-                   this.setState({quizlet})
+                  })
                    maxnum++;
                }
                if( mul && maxnum<tqt)
                {
-                   this.setState( {quizlet: this.state.quizlet.push({
+                    questionarray.push({
                      q:`${num1}*${num2}`,
                      a:num1*num2
-                   })})
+                   })
                    maxnum++;
                }
                if( sub && maxnum<tqt)
                {
                   if(num1 > num2)
                   {
-                    this.setState({quizlet: this.state.quizlet.push({
-                      q:`${num1}-${num2}`,
+                     questionarray.push({
+                       q:`${num1}-${num2}`,
                       a:num1+num2
-                    })})
+                    })
                   }
                    else if(num2 > num1)
                    {
-                     this.setState({quizlet: this.state.quizlet.push({
+                      questionarray.push({
                        q:`${num2}-${num1}`,
                        a:num2-num1
-                     })})
+                     })
                    }
                    maxnum++;
                 }
                 if( div && maxnum<tqt)
                 {
                     let num3 = num1*num2;
-                    this.setState({quizlet: this.state.quizlet.push({
-                      q:`${num3} / ${num2}`,
-                      a:num1
-                    })})
+                     questionarray.push({
+                       q:`${num3} / ${num2}`,
+                        a:num1
+                    })
                     maxnum++ ;
                 }
-                console.log(`The quizlet when ${maxnum} is ${this.state.quizlet}`);
+
+                console.log("The Question array", questionarray);
+                //this.startQuiz( questionarray);
              }//end while
+               this.handleInputChange('quizlet',questionarray);
+
+
          } //end if part
          else {
              alert("Choose an option");

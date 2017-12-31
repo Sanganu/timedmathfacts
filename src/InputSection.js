@@ -34,7 +34,7 @@ class InputSection extends Component {
                                      <input type = "checkbox"  checked={this.props.multiplication} onChange = {this.handleInputdesc} name = "multiplication" />Multiplication
                                   </label>
                                   <label className ="checkbox-inline cloptions">
-                                      <input type = "checkbox"  checked={this.props.division} onChange = {this.handleInputdesc} name = "division" />Multiplication
+                                      <input type = "checkbox"  checked={this.props.division} onChange = {this.handleInputdesc} name = "division" />Division
                                    </label>
                                  <div className = "form-group">
                                       <label>Number of Questions</label>
