@@ -5,25 +5,27 @@ class QuestList extends Component {
 
       constructor(props){
         super(props);
+        this.state = {
+          myscore : 0,
+
+          myans : 0
+        }
       }
-      state = {
-        myscore : 0,
-        myqno : 0,
-        myans : 0
-      }
-      checkans()
+
+      checkans = () =>
       {
-          var myscore = this.state.score;
-          var myqno = this.state.myqno;
-          myqno++
+          console.log("Inside Checkans");
+          var myscore = this.state.myscore;
+
+
            if (this.userreply === this.state.myans)
            {
              myscore++
            }
            this.setState({myscore});
-           this.setState({myqno});
+
            this.props.onChange(myscore,'score');
-           this.props.onChange(myqno,'qno');
+           //this.props.onChange(myqno,'qno');
       }
 
 
@@ -31,7 +33,7 @@ class QuestList extends Component {
 
     render(){
            this.state.myscore = this.props.score;
-           this.state.myqno = this.props.qno;
+
            this.state.myans = this.props.answer;
            return(<div>
                      <div className ="summary">
@@ -41,7 +43,7 @@ class QuestList extends Component {
                      <h6 name="qno">{this.props.qno}</h6>
                      <h3>{this.props.question}</h3>
                      <input type="text" ref = "userreply" />
-                     <button onClick={this.Checkans}>Submit</button>
+                     <button onClick={this.checkans}>Submit</button>
                    </div>)
               }
 }

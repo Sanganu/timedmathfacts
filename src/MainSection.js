@@ -12,11 +12,11 @@ class MainSection extends Component {
                       multiplication: true,
                       division: true,
                       tquest: '10',
-                           quizlet:[],
-                           question:'',
-                           answer:'',
-                           qno:0,
-                           score:0
+                      anslet: [],
+                      question:'',
+                      answer:'',
+                      qno:0,
+                      score:0
                     };
        }
 
@@ -26,22 +26,32 @@ class MainSection extends Component {
             this.setState({
                [name]: value
              });
-         console.log(`The quizlet state array is ${this.state.quizlet}`);
+
+            if(name === 'score')
+            {
+              this.setState({qno: this.state.qno++});
+
+            }
        }
 
 
 
-       startQuiz = (quizlet) => {
-         console.log("staartquiz",quizlet);
-         let allquest = quizlet;
-         let i = this.state.qno ;
-         while( i < allquest.length)
-         {
-              console.log(`The i ${i},allquest[${i}]`)
-              this.setState.question = allquest[i].q,
-              this.setState.answer = allquest[i].a
-              i++;
-         }
+       startQuiz = () => {
+               console.log("staartquiz",this.state.anslet);
+               /*
+               let allquest = quizlet;
+               let i = 0//this.state.qno ;
+               while( i < allquest.length)
+               {
+
+                    //this.setState.question = allquest[i].q
+                    //this.setState.answer = allquest[i].a
+                    this.handleInputChange(allquest[i].q,this.state.question);
+                    console.log("The all quest",this.state.question,this.state.answer[i])
+                    i++;
+
+               }*/
+               console.log("Start quiz:")
        }
 
       generateQuestion =() => {
@@ -52,66 +62,75 @@ class MainSection extends Component {
          let mul = this.state.multiplication;
          let div = this.state.division;
          console.log('Insidegenerate',tqt,add,sub,mul,div);
-         let num1 = Math.floor(Math.random()*(maxnum));
-         let num2 = Math.floor(Math.random()*(maxnum));
+         let min = 2;
+         let max = 12;
+         let num1 = Math.floor(Math.random()*(max - min +1))+min;
+         let num2 = Math.floor(Math.random()*(max));
          let  questionarray = [];
 
          if ( add || sub || mul || div)
          {
              while(maxnum < tqt)
              {
-               let num1 = Math.floor(Math.random()*(maxnum-1)+1);
-               let num2 = Math.floor(Math.random()*(maxnum-1)+1);
-               if( add && maxnum<tqt)
-               {
-                    questionarray.push({
-                    q:`${num1}+${num2}`,
-                    a:num1+num2
-                  })
-                   maxnum++;
-               }
-               if( mul && maxnum<tqt)
-               {
-                    questionarray.push({
-                     q:`${num1}*${num2}`,
-                     a:num1*num2
-                   })
-                   maxnum++;
-               }
-               if( sub && maxnum<tqt)
-               {
-                  if(num1 > num2)
-                  {
-                     questionarray.push({
-                       q:`${num1}-${num2}`,
-                      a:num1+num2
-                    })
-                  }
-                   else if(num2 > num1)
-                   {
-                      questionarray.push({
-                       q:`${num2}-${num1}`,
-                       a:num2-num1
-                     })
-                   }
-                   maxnum++;
-                }
-                if( div && maxnum<tqt)
-                {
-                    let num3 = num1*num2;
-                     questionarray.push({
-                       q:`${num3} / ${num2}`,
-                        a:num1
-                    })
-                    maxnum++ ;
-                }
+                         let num1 = Math.floor(Math.random()*(maxnum-1)+1);
+                         let num2 = Math.floor(Math.random()*(maxnum-1)+1);
+                         if( add && maxnum<tqt)
+                         {
+                              questionarray.push({
+                              q:`${num1}+${num2}`,
+                              a:num1+num2
+                            })
+                             maxnum++;
+                         }
+                         if( mul && maxnum<tqt)
+                         {
+                              questionarray.push({
+                               q:`${num1}*${num2}`,
+                               a:num1*num2
+                             })
+                             maxnum++;
+                         }
+                         if( sub && maxnum<tqt)
+                         {
+                                if(num1 > num2)
+                                {
+                                   questionarray.push({
+                                     q:`${num1}-${num2}`,
+                                    a:num1+num2
+                                     })
+                                      maxnum++;
+                                }
+                                 else if(num2 > num1)
+                                 {
+                                    questionarray.push({
+                                     q:`${num2}-${num1}`,
+                                     a:num2-num1
+                                     })
+                                      maxnum++;
+                                 }
 
-                console.log("The Question array", questionarray);
-                //this.startQuiz( questionarray);
+                         }
+                          if( div && maxnum<tqt)
+                          {
+                              let num3 = num1*num2;
+                               questionarray.push({
+                                     q:`${num3} / ${num2}`,
+                                      a:num1
+                                  })
+
+                              maxnum++ ;
+                          }
              }//end while
-               this.handleInputChange('quizlet',questionarray);
-
-
+             console.log("The Question array", questionarray);
+             this.setState(
+                   {
+                     anslet:questionarray
+                   }
+                 ,
+                    () => {
+                       this.startQuiz( );
+                     }
+             );
          } //end if part
          else {
              alert("Choose an option");
@@ -126,6 +145,9 @@ class MainSection extends Component {
          const division = this.state.division;
          const tquest = this.state.tquest;
          const quizlet = this.state.quizlet;
+         const question = this.state.question;
+         const answer = this.state.answer;
+         const score = this.state.score
           return(
             <div>
                    <InputSection addition = {addition}
@@ -136,10 +158,10 @@ class MainSection extends Component {
                                  onChange = {this.handleInputChange}
                                  onClick = {this.generateQuestion} />
 
-                   <QuestList  question  = {this.state.question}
-                               answer = {this.state.answer}
-                                qno = {this.state.qno}
-                                score = {this.state.score}
+                   <QuestList  question  = {question}
+                               answer = {answer}
+                              score = {score}
+                              onChange ={this.handleInputChange}
                                  />
              </div>
            ); // end of return
@@ -148,7 +170,7 @@ class MainSection extends Component {
 
 export default MainSection;
 
-
+// The Problem is setting the state of array - startquiz, tried to set state os array and variable name not sure why it is not changing
 
 /*
 constructor(props) {
