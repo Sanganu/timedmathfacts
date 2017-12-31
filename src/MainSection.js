@@ -143,14 +143,17 @@ class MainSection extends Component {
           var userreply = this.state.userreply;
           var qno = this.state.qno;
           var correctanswer = this.state.answer[qno];
-          qno++;
+          var l = this.state.anslet.length;
+          console.log('l is',l);
+
+          qno++ ;
 
            if (userreply === correctanswer)
            {
              myscore++
            }
            console.log("Score",myscore,"qno",qno);
-           if ( this.state.qno < this.state.anslet.length)
+           if ( qno < l)
            {
                  this.setState({
                    myscore: myscore,
@@ -161,22 +164,12 @@ class MainSection extends Component {
                        this.startQuiz();
                   });
            }
-
-
-      }
-
-      getnext()
-      {
-         this.setState({
-           currenta : this.state.anslet[this.state.qno].a,
-           currentq   : this.state.anslet[this.state.qno].q,
-
-         },
-          () => {
-              console.log("Update values",this.state.qno,this.state.currenta,this.state.currentq);
-          });
+           else {
+               console.log("End of Quiz");
+           }
 
       }
+
 
 
        render() {

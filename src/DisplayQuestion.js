@@ -14,22 +14,6 @@ class QuestList extends Component {
         }
       }
 
-    //  componenDidMount =() => {
-    //        console.log("Component Received Prop",this.props.anslet)
-    //        if ( this.props.anslet.length  >0)
-    //        {
-    //              this.setState({
-    //                     anslet : this.props.anslet,
-    //                     currenta : this.state.anslet[this.state.qno].a,
-    //                     currentq : this.state.anslet[this.state.qno].q,
-    //                     myscore:0,
-    //                     qno: 0
-    //              });
-     //
-    //        }
-     //
-    //  }
-
 
       checkans = (event) => {
         let textval = this.refs.userreply.value
@@ -38,21 +22,32 @@ class QuestList extends Component {
         this.props.onClick()
       }
 
+     componentWillReceiveProps(nextprops)
+     {
+       if(nextprops != this.props.qno)
+       {
+         this.refs.userreply.value =""; 
+       }
+     }
 
 
     render(){
            const currentq = this.props.currentq;
            const currenta = this.props.currenta;
            const myscore = this.props.myscore;
+           const qno = this.props.qno;
+
            return(<div>
                      <div className ="summary">
                           <h6 name="score">Score: {this.state.myscore}</h6>
                           <h6>Time:</h6>
-                          <h3 name="Question">{currentq}</h3>
+                          <h6>Question:{qno}</h6>
                       </div>
-
-                     <textarea type="text" ref = "userreply"></textarea>
-                     <button onClick={this.checkans}>Submit</button>
+                      <div>
+                            <h3 name="Question">{currentq}</h3>
+                           <textarea type="text" ref = "userreply"></textarea>
+                           <button onClick={this.checkans}>Submit</button>
+                      </div>
                    </div>)
               }
 }
