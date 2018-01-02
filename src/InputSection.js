@@ -35,13 +35,24 @@ class InputSection extends Component {
                                  <div className = "form-group">
                                       <label>Number of Questions</label>
                                        <select value={this.props.tquest} onChange = {this.handleInputdesc} className = "form-control" name = "tquest">
-                                          <option value ='10'>10</option>
-                                          <option value ='9'>9</option>
-                                          <option value ='7'>7</option>
                                           <option value ='5'>5</option>
+                                          <option value ='10'>10</option>
+                                          <option value ='20'>20</option>
+                                          <option value ='30'>30</option>
+                                          <option value ='40'>40</option>
                                        </select>
                                   </div>
-                                   <br />
+                                  <div className = "form-group">
+                                       <label>Maximum Number</label>
+                                        <select value={this.props.upto} onChange = {this.handleInputdesc} className = "form-control" name = "upto">
+                                           <option value ='10'>10</option>
+                                           <option value ='20'>20</option>
+                                           <option value ='30'>30</option>
+                                           <option value ='40'>40</option>
+                                        </select>
+                                   </div>
+
+                                  <br />
                             <button className = "btn btn-info"  name = "getquest" onClick = {this.handleClickdesc}>Start the Quiz</button>
                    </fieldset>
              );

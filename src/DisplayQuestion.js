@@ -6,47 +6,62 @@ class QuestList extends Component {
       constructor(props){
         super(props);
         this.state = {
-          score : 0,
+          myscore : 0,
           currentq : '',
           currenta: 0,
-          anslet : [],
-          qno:0
         }
       }
 
 
-      checkans = (event) => {
-        let textval = this.refs.userreply.value
-        console.log("checkans child usererpl",textval)
-        this.props.onChange(textval,'usereply')
-        this.props.onClick()
+
+      userinput = () =>
+      {
+              let textval = Number(this.refs.userreply.value)
+              let canswer = Number(this.props.currenta)
+              let myscore = this.state.myscore
+              console.log("textval",textval,"canswer",canswer,myscore);
+
+              if ( canswer === textval)
+              {
+                console.log("Increment score");
+                myscore++;
+              }
+              //this.refs.qdisplay.value = "";
+              //
+              this.setState({
+                myscore: myscore
+              },
+              () => {
+                   console.log("textval",textval,"canswer",canswer,myscore);
+                 this.props.onClick()
+              });
+        //console.log("checkans child usererpl",textval)
+
       }
 
      componentWillReceiveProps(nextprops)
      {
-       if(nextprops != this.props.qno)
+       if(nextprops !== this.props.qno)
        {
-         this.refs.userreply.value =""; 
+         this.refs.userreply.value ="";
        }
      }
 
 
     render(){
            const currentq = this.props.currentq;
-           const currenta = this.props.currenta;
-           const myscore = this.props.myscore;
-           const qno = this.props.qno;
-
            return(<div>
                      <div className ="summary">
                           <h6 name="score">Score: {this.state.myscore}</h6>
-                          <h6>Time:</h6>
-                          <h6>Question:{qno}</h6>
+
                       </div>
                       <div>
-                            <h3 name="Question">{currentq}</h3>
-                           <textarea type="text" ref = "userreply"></textarea>
-                           <button onClick={this.checkans}>Submit</button>
+
+                            <h3 ref="qdisplay" name="Question">{currentq}</h3>
+                            <label>
+                                <textarea type="text" ref = "userreply" ></textarea>
+                            </label>
+                           <button onClick={this.userinput}>Submit</button>
                       </div>
                    </div>)
               }

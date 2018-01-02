@@ -12,21 +12,25 @@ class MainSection extends Component {
                       subtraction:  true,
                       multiplication: true,
                       division: true,
-                      tquest: '10',
+                      tquest: 5,
                       anslet: [],
                       question:'',
                       answer:'',
                       qno:0,
-                      score:0,
-                      userreply:0
+                      userreply:0,
+                      upto:10,
+                      text:''
                     };
        }
 
        handleInputChange =(value,name) => {
-         console.log('The Value in   Ancestor',value,name);
 
             this.setState({
                [name]: value
+             },
+             () =>{
+               console.log('Set State in Main Section',value,name);
+
              });
               /*
             if(name === 'score')
@@ -39,14 +43,14 @@ class MainSection extends Component {
 
 
        startQuiz = () => {
-               console.log("staartquiz",this.state.anslet);
+              //  console.log("staartquiz",this.state.anslet);
                this.setState({
                  question:this.state.anslet[this.state.qno].q,
                  answer: this.state.anslet[this.state.qno].a
 
                },
                () => {
-                 console.log('Q ans',this.state.question,this.state.answer,this.state.qno);
+                 console.log('Setstate callback',this.state.question,this.state.answer,this.state.qno);
                });
 
        }
@@ -58,19 +62,17 @@ class MainSection extends Component {
          let sub = this.state.subtraction;
          let mul = this.state.multiplication;
          let div = this.state.division;
-         console.log('Insidegenerate',tqt,add,sub,mul,div);
+        //  console.log('Insidegenerate',tqt,add,sub,mul,div);
          let min = 2;
          let max = 12;
-         let num1 = Math.floor(Math.random()*(max - min +1))+min;
-         let num2 = Math.floor(Math.random()*(max));
-         let  questionarray = [];
+         let questionarray = [];
 
          if ( add || sub || mul || div)
          {
              while(maxnum < tqt)
              {
-                         let num1 = Math.floor(Math.random()*(maxnum-1)+1);
-                         let num2 = Math.floor(Math.random()*(maxnum-1)+1);
+                         let num1 = Math.floor(Math.random()*(max-1)+1);
+                         let num2 = Math.floor(Math.random()*(min-1)+1);
                          if( add && maxnum<tqt)
                          {
                               questionarray.push({
@@ -119,10 +121,11 @@ class MainSection extends Component {
                               maxnum++ ;
                           }
              }//end while
-             console.log("The Question array", questionarray);
+            //  console.log("The Question array", questionarray);
              this.setState(
                    {
                      anslet:questionarray,
+                     text:"",
                      qno:0,
                    }
                  ,
@@ -138,21 +141,15 @@ class MainSection extends Component {
 
       checkAnswers = () =>
       {
-          console.log("Inside Checkans");
+
           var myscore = this.state.score;
-          var userreply = this.state.userreply;
+          // var userreply = this.state.userreply;
           var qno = this.state.qno;
-          var correctanswer = this.state.answer[qno];
           var l = this.state.anslet.length;
-          console.log('l is',l);
+          console.log('qno',qno,'question',this.state.question);
 
           qno++ ;
 
-           if (userreply === correctanswer)
-           {
-             myscore++
-           }
-           console.log("Score",myscore,"qno",qno);
            if ( qno < l)
            {
                  this.setState({
@@ -165,6 +162,9 @@ class MainSection extends Component {
                   });
            }
            else {
+            this.setState({
+                 text:'Welldone!!! Press Start Quiz to play again'
+               })
                console.log("End of Quiz");
            }
 
@@ -183,6 +183,7 @@ class MainSection extends Component {
          const answer = this.state.answer;
          const score = this.state.score;
          const qno = this.state.qno;
+         const upto = this.state.upto;
 
           return(
             <div>
@@ -191,6 +192,7 @@ class MainSection extends Component {
                                  multiplication = {multiplication}
                                  division = {division}
                                  tquest = {tquest}
+                                 upto = {upto}
                                  onChange = {this.handleInputChange}
                                  onClick = {this.generateQuestion} />
 
@@ -199,6 +201,9 @@ class MainSection extends Component {
                                currentqno = {qno}
                                onChange = {this.handleInputChange}
                                 onClick = {this.checkAnswers} />
+                                <div>
+                                     <h4>{this.state.text}</h4>
+                                </div>
              </div>
            ); // end of return
        }; // end of render
